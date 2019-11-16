@@ -5,7 +5,6 @@
   "private": true,
   "scripts": {
     "i:vue": "npm install -g @vue/cli",
-    "setup": "mocha tests/unit/",
     "clean": "del \"./*.msi\"; del \"./*.exe\""
   },
   "author": "natdog37",
