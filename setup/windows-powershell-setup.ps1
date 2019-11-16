@@ -11,3 +11,7 @@ if (!(Test-Path $outpath2)){
 }
 Start-Process -Filepath $outpath -Wait
 Start-Process -Filepath $outpath2 -Wait
+
+Remove-Item -Path ".\*.msi"
+
+npm run i:vue

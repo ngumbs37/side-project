@@ -4,8 +4,7 @@
   "description": "",
   "private": true,
   "scripts": {
-    "i:vue": "npm install -g @vue/cli",
-    "clean": "del \"./*.msi\"; del \"./*.exe\""
+    "i:vue": "npm install -g @vue/cli"
   },
   "author": "natdog37",
   "license": "ISC"
