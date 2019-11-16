@@ -1,0 +1,12 @@
+{
+  "name": "set-up-scripts",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "scripts": {
+    "i:vue": "npm install -g @vue/cli",
+    "setup": "mocha tests/unit/"
+  },
+  "author": "natdog37",
+  "license": "ISC"
+}
