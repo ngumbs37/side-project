@@ -5,8 +5,10 @@
   "main": "index.js",
   "scripts": {
     "build": "source .env-dev && sh scripts/build.sh",
+    "build:test": "source .env-test && sh scripts/build.sh",
     "build:windows": "set /P Path=< .\\.env-dev && .\\scripts\\build.sh",
     "deploy": "source .env-dev && sh scripts/deploy.sh",
+    "deploy:test": "source .env-test && sh scripts/deploy.sh",
     "deploy:windows": "env\\scripts\\activate .\\.env-dev && sh .\\scripts\\deploy.sh",
     "test": "echo \"Error: no test specified\" && exit 1"
   }

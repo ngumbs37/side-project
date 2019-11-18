@@ -10,4 +10,4 @@ for i in $(find . -name '*.yml'); do
     #aws cloudformation package --template-file $i --s3-bucket $s3_bucket --output-template-file $path_for_compiled_templates
 done
 aws s3 cp templates s3://$s3_bucket --recursive
-# rm -rf .aws-sam/
+rm -rf .aws-sam/
