@@ -1,0 +1,13 @@
+{
+  "name": "serverless-pattern",
+  "version": "1.0.0",
+  "description": "test for api gw",
+  "main": "index.js",
+  "scripts": {
+    "build": "source .env-dev && sh scripts/build.sh",
+    "build:windows": "set /P Path=< .\\.env-dev && .\\scripts\\build.sh",
+    "deploy": "source .env-dev && sh scripts/deploy.sh",
+    "deploy:windows": "env\\scripts\\activate .\\.env-dev && sh .\\scripts\\deploy.sh",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}

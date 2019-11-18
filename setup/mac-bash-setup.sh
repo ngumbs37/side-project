@@ -20,4 +20,7 @@ echo "Finished installing NodeJs v12.13.0"
 rm $node
 echo "Removed installation $node file"
 
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 npm run i:vue
+brew tap aws/tap
+brew install aws-sam-cli
