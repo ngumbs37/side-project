@@ -8,35 +8,35 @@ Parameters:
     Description: ID of the Resource
     Type: String
 Resources:
-  UserPostApi:
+  UserGetApi:
     Type: AWS::ApiGateway::Method
     DependsOn:
-    - UserPostLambda
+    - UserGetLambda
     Properties:
-      HttpMethod: POST
+      HttpMethod: GET
       AuthorizationType: NONE
       Integration:
         IntegrationHttpMethod: "POST"
         Type: "AWS_PROXY"
         Uri: !Sub
           - "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${lambdaArn}/invocations"
-          - lambdaArn: !GetAtt "UserPostLambda.Arn"
+          - lambdaArn: !GetAtt "UserGetLambda.Arn"
       RestApiId: !Ref RestApi
       ResourceId: !Ref ResourceId
-  UserPostLambda:
+  UserGetLambda:
     Type: AWS::Lambda::Function
     DependsOn:
-    - UserPostIamRole
+    - UserGetIamRole
     Properties:
       Code: ./
-      Description: Function to Post User
-      FunctionName: UserPost
+      Description: Function to Get User
+      FunctionName: UserGet
       Handler: index.handler
       MemorySize: 128
-      Role: !GetAtt "UserPostIamRole.Arn"
-      Runtime: nodejs8.10
+      Role: !GetAtt "UserGetIamRole.Arn"
+      Runtime: nodejs8.10 # 
       Timeout: 60
-  UserPostIamRole:
+  UserGetIamRole:
     Type: "AWS::IAM::Role"
     Properties:
       AssumeRolePolicyDocument:
@@ -64,10 +64,10 @@ Resources:
                   - "ec2:DeleteNetworkInterface"
                 Effect: "Allow"
                 Resource: '*'
-          PolicyName: "UserPostIamRole"
-  UserPostApiGatewayInvoke:
+          PolicyName: "UserGetIamRole"
+  UserGetApiGatewayInvoke:
     Type: "AWS::Lambda::Permission"
     Properties:
       Action: "lambda:InvokeFunction"
-      FunctionName: !GetAtt "UserPostLambda.Arn"
+      FunctionName: !GetAtt "UserGetLambda.Arn"
       Principal: "apigateway.amazonaws.com"

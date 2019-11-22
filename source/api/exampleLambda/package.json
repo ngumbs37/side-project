@@ -1,0 +1,12 @@
+{
+  "name": "~example-name-with_no_cap1tals_sp4ces.0r.special.characters~",
+  "version": "1.0.0",
+  "description": "pretty much anything goes, main is static for this project",
+  "main": "index.js",
+  "scripts": {
+    "build": "sam build -t template-name-should-follow-the-folder-pattern.yml",
+    "invoke": "sam local invoke --event test-event.json"
+  },
+  "author": "",
+  "license": "ISC"
+}
