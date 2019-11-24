@@ -6,10 +6,15 @@
   "scripts": {
     "build": "source .env-dev && sh scripts/build.sh",
     "build:test": "source .env-test && sh scripts/build.sh",
-    "build:windows": "set /P Path=< .\\.env-dev && .\\scripts\\build.sh",
+    "build:windows:test": ".\\scripts\\build-test.cmd && npm run test:upload",
+    "test:upload": "aws s3 cp templates s3://BUCKET_NAME --recursive",
     "deploy": "source .env-dev && sh scripts/deploy.sh",
     "deploy:test": "source .env-test && sh scripts/deploy.sh",
-    "deploy:windows": "env\\scripts\\activate .\\.env-dev && sh .\\scripts\\deploy.sh",
+    "deploy:windows:test": ".\\scripts\\deploy-test.cmd",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "aws-sdk": "^2.578.0",
+    "faker": "^4.1.0"
   }
 }

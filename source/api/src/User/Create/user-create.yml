@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: Our app API
+Description: Create a User on the User Table
 Parameters:
   RestApi:
     Description: Name of the RestAPI
@@ -7,36 +7,43 @@ Parameters:
   ResourceId:
     Description: ID of the Resource
     Type: String
+  Stage:
+    Description: Stage
+    Type: String
 Resources:
-  UserGetApi:
+  UserCreateApi:
     Type: AWS::ApiGateway::Method
     DependsOn:
-      - UserGetLambda
+    - UserCreateLambda
     Properties:
-      HttpMethod: GET
+      HttpMethod: POST
       AuthorizationType: NONE
       Integration:
         IntegrationHttpMethod: "POST"
         Type: "AWS_PROXY"
         Uri: !Sub
           - "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${lambdaArn}/invocations"
-          - lambdaArn: !GetAtt "UserGetLambda.Arn"
+          - lambdaArn: !GetAtt "UserCreateLambda.Arn"
       RestApiId: !Ref RestApi
       ResourceId: !Ref ResourceId
-  UserGetLambda:
+
+  UserCreateLambda:
     Type: AWS::Lambda::Function
     DependsOn:
-      - UserGetIamRole
+    - UserCreateIamRole
     Properties:
       Code: ./
-      Description: Function to Get User
-      FunctionName: UserGet
+      Description: Function to Create User
+      FunctionName: UserCreate
       Handler: index.handler
       MemorySize: 128
-      Role: !GetAtt "UserGetIamRole.Arn"
+      Role: !GetAtt "UserCreateIamRole.Arn"
       Runtime: nodejs8.10
       Timeout: 60
-  UserGetIamRole:
+      Environment:
+        Variables:
+          USER_TABLE: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${Stage}-UserTable"
+  UserCreateIamRole:
     Type: "AWS::IAM::Role"
     Properties:
       AssumeRolePolicyDocument:
@@ -64,10 +71,14 @@ Resources:
                   - "ec2:DeleteNetworkInterface"
                 Effect: "Allow"
                 Resource: '*'
-          PolicyName: "UserGetIamRole"
-  UserGetApiGatewayInvoke:
+              - Action:
+                  - "dynamodb:PutItem"
+                Effect: "Allow"
+                Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${Stage}-UserTable"
+          PolicyName: "UserCreateIamRole"
+  UserCreateApiGatewayInvoke:
     Type: "AWS::Lambda::Permission"
     Properties:
       Action: "lambda:InvokeFunction"
-      FunctionName: !GetAtt "UserGetLambda.Arn"
+      FunctionName: !GetAtt "UserCreateLambda.Arn"
       Principal: "apigateway.amazonaws.com"

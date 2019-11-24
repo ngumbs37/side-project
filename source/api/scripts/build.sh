@@ -1,4 +1,4 @@
-s3_bucket=sally-chata
+s3_bucket=$S3_BUCKET
 for i in $(find . -name '*.yml'); do
     filename=$(basename $i)
     directory=$(dirname $i)

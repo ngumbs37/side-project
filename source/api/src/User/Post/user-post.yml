@@ -11,9 +11,9 @@ Resources:
   UserPostApi:
     Type: AWS::ApiGateway::Method
     DependsOn:
-    - UserPostLambda
+      - UserPostLambda
     Properties:
-      HttpMethod: POST
+      HttpMethod: PUT
       AuthorizationType: NONE
       Integration:
         IntegrationHttpMethod: "POST"
@@ -26,7 +26,7 @@ Resources:
   UserPostLambda:
     Type: AWS::Lambda::Function
     DependsOn:
-    - UserPostIamRole
+      - UserPostIamRole
     Properties:
       Code: ./
       Description: Function to Get User
