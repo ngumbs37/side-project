@@ -1,6 +1,7 @@
 {
   "files.exclude": {
     "**/.git": true,
-    "**/node_modules": false
+    "**/.aws-sam": true,
+    "**/node_modules": true
   }
 }

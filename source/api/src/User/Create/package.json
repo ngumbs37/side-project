@@ -4,14 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "sam build -t user-create.yml",
+    "build": "sam build -t ../user-create.yml",
     "invoke": "sam local invoke --event test-event.json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
   "license": "ISC",
   "dependencies": {
-    "faker": "^4.1.0",
     "uuid": "^3.3.3"
+  },
+  "devDependencies": {
+    "faker": "4.1.0"
   }
 }
