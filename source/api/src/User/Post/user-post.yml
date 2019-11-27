@@ -28,7 +28,7 @@ Resources:
     DependsOn:
       - UserPostIamRole
     Properties:
-      Code: ./
+      Code: ./code
       Description: Function to Get User
       FunctionName: UserPost
       Handler: index.handler

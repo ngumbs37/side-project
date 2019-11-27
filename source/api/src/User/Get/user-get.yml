@@ -28,7 +28,7 @@ Resources:
     DependsOn:
       - UserGetIamRole
     Properties:
-      Code: ./
+      Code: ./code
       Description: Function to Get User
       FunctionName: UserGet
       Handler: index.handler

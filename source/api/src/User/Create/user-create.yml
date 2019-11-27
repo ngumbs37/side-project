@@ -32,7 +32,7 @@ Resources:
     DependsOn:
     - UserCreateIamRole
     Properties:
-      Code: ./
+      Code: ./code
       Description: Function to Create User
       FunctionName: UserCreate
       Handler: index.handler
