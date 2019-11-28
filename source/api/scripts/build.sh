@@ -7,7 +7,6 @@ for i in $(find . -name '*.yml'); do
     echo $path_for_compiled_templates
     sam build -s $directory -t $i
     sam package --template-file $i --s3-bucket $s3_bucket --output-template-file $path_for_compiled_templates
-    #aws cloudformation package --template-file $i --s3-bucket $s3_bucket --output-template-file $path_for_compiled_templates
 done
 aws s3 cp templates s3://$s3_bucket --recursive
 rm -rf .aws-sam/
