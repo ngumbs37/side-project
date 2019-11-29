@@ -1,7 +1,8 @@
 for i in $(find ./src -not -path '*/.aws-sam/*' -not -path '*/node_modules/*' -name '*.yml'); do
     filename=$(basename $i)
     directory=$(dirname $i)
-    yml_to_yaml=${filename/yml/yaml}
+    local_aws_sam=$directory"/.aws-sam/" # local built artifacts of the lambda
+    yml_to_yaml=${filename/yml/yaml} #
     path_for_compiled_templates='templates/'$yml_to_yaml
     echo $path_for_compiled_templates
     sam build -s $directory -t $i

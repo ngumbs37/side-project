@@ -29,7 +29,7 @@ Resources:
       - UserPostIamRole
     Properties:
       Code: ./code
-      Description: Function to Get User
+      Description: Function to Post User
       FunctionName: UserPost
       Handler: index.handler
       MemorySize: 128

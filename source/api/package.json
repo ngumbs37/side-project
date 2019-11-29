@@ -11,7 +11,8 @@
     "deploy": "source .env-dev && sh scripts/deploy.sh",
     "deploy:test": "source .env-test && sh scripts/deploy.sh",
     "deploy:windows:test": ".\\scripts\\deploy-test.cmd",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test:unit": "mocha **/unit.spec.js",
+    "test:integration": "mocha **/integration.spec.js"
   },
   "devDependencies": {
     "aws-sdk": "^2.578.0",
