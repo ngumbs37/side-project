@@ -1,0 +1,14 @@
+{
+  "name": "~example-name-with_no_cap1tals_sp4ces.0r.certain_special.characters~",
+  "version": "1.0.0",
+  "description": "pretty much anything goes for 'description', 'main' should stay as 'index.js' for this project",
+  "main": "index.js",
+  "scripts": {
+    "build": "sam build -t ../example-lambda.yml",
+    "invoke": "sam local invoke --event ../test-event.json",
+    "test:unit": "mocha ../unit.spec.js",
+    "test:integration": "mocha ../integration.spec.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
