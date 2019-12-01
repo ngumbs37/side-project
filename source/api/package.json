@@ -17,11 +17,16 @@
   "devDependencies": {
     "aws-sdk": "^2.578.0",
     "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
     "chai-http": "^4.3.0",
     "faker": "^4.1.0",
     "json-schema-faker": "^0.5.0-rc23",
     "mocha": "^6.2.2",
     "module-alias": "^2.2.2",
     "rewiremock": "^3.13.9"
+  },
+  "_moduleAliases": {
+    "@test": "./test",
+    "@stubs": "./test/stubs"
   }
 }

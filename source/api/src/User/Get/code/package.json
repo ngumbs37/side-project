@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build": "sam build -t ../user-get.yml",
-    "invoke": "sam local invoke --event test-event.json",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "invoke": "sam local invoke --event ../test-event.json",
+    "test:unit": "mocha ../unit.spec.js",
+    "test:integration": "mocha ../integration.spec.js"
   },
   "license": "ISC"
 }
