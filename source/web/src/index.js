@@ -1,6 +1,8 @@
 import React from 'react'
 import { render } from 'react-dom'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import './normalize.css';
+import './skeleton.css';
 import './index.css';
 import Nav from './pages/components/Nav'
 import Home from './pages/Home'

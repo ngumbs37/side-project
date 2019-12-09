@@ -1,5 +1,5 @@
 import React from 'react';
-// import './css/User.css';
+import InventoryCardDetails from './components/inventoryCardDetails';
 
 function User() {
   return (
@@ -8,14 +8,7 @@ function User() {
         <p>
           Edit <code>src/pages/User.js</code> and save to reload.
         </p>
-        <a
-          className="User-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <InventoryCardDetails></InventoryCardDetails>
       </header>
     </div>
   );
