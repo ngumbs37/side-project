@@ -37,7 +37,6 @@
 .column,
 .columns {
   width: 100%;
-  /* float: left; */
   box-sizing: border-box;
 }
 
@@ -450,17 +449,7 @@ pre > code {
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 th,
 td {
-  padding: 12px 15px;
-  text-align: left;
-  border-bottom: 1px solid #e1e1e1;
-}
-th:first-child,
-td:first-child {
-  padding-left: 0;
-}
-th:last-child,
-td:last-child {
-  padding-right: 0;
+  padding: 0rem 3rem;
 }
 
 /* Spacing
@@ -479,7 +468,6 @@ pre,
 blockquote,
 dl,
 figure,
-table,
 p,
 ul,
 ol,
@@ -507,10 +495,9 @@ form {
 /* Misc
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 hr {
-  margin-top: 3rem;
-  margin-bottom: 3.5rem;
+  margin: .5rem 0;
   border-width: 0;
-  border-top: 1px solid #e1e1e1;
+  border-top: 1px solid #ffffff96;
 }
 
 /* Clearing

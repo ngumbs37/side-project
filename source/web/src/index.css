@@ -12,7 +12,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(to right, #9a4fa7 0%, #e86886 100%);
+  background: linear-gradient(to right, #8747a6 0%, #ff6f75 100%);
   justify-content: center;
 }
 code {
@@ -31,6 +31,16 @@ code {
 }
 .App {
   text-align: center;
+}
+
+.shaded {
+  background-color: #ffffff66;
+}
+.shaded-dark {
+  background-color: #ffffff96;
+}
+.shaded-light {
+  background-color: #ffffff36;
 }
 
 .App-logo {
