@@ -1,7 +1,7 @@
 {
   "name": "user-register",
   "version": "1.0.0",
-  "description": "",
+  "description": "User registration endpoint",
   "main": "index.js",
   "scripts": {
     "build": "sam build -t ../user-register.yml",
@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "uuid": "^3.3.3",
-    "faker": "4.1.0"
+    "faker": "4.1.0",
+    "bcrypt": "3.0.6"
   }
 }
