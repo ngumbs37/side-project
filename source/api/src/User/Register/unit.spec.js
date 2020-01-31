@@ -1,8 +1,6 @@
 require('module-alias/register')
 const rewiremock = require('rewiremock').default
 const chai = require('chai')
-const chaiAsPromised = require('chai-as-promised')
-chai.use(chaiAsPromised)
 const expect = chai.expect
 
 const putItem = rewiremock.proxy('./code/lib/putItem', {
@@ -19,7 +17,6 @@ describe('User Register', () => {
 
     it('unsuccessful dynamodb put', (done) => {
       putItem('table', {fail: true}).catch((result)=>{
-        console.log(result)
         expect(result).to.be.an('object')
         expect(result.Attributes).to.be.undefined
         done()

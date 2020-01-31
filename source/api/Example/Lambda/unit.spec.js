@@ -5,3 +5,12 @@
   * the test can be run locally for this code/lambda only
   * or as a full test suite using the test script in /api/package.json
   **/
+const chai = require('chai')
+const expect = chai.expect
+
+describe('Example Lambda', () => {
+  it('Expects item to be intended value', () => {
+    const item = true
+    expect(item).to.equal(true)
+  })
+})
