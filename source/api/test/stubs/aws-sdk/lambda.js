@@ -1,5 +1,5 @@
 const Lambda = class {
-  constructor() { }
+  constructor(options) { }
 }
 
 Lambda.prototype.invoke = () => {

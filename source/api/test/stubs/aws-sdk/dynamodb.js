@@ -1,9 +1,11 @@
 const DynamoDB = class {
   constructor(options) { }
 }
+
 DynamoDB.DocumentClient = class {
   constructor(options) { }
 }
+
 const response = {
   Attributes: {},
   Item: {},
@@ -16,6 +18,7 @@ const response = {
     CapacityUnits: 1.1,
   },
 }
+
 const promise = (params) => {
   return {
     promise: () => {
@@ -28,6 +31,7 @@ const promise = (params) => {
     }
   }
 }
+
 const stub = (params, next) => {
   if(typeof next === 'function') {
     if((params.Item && params.Item.fail) || params.fail) {

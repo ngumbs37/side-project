@@ -8,10 +8,10 @@ Parameters:
     Description: ID of the Resource
     Type: String
 Resources:
-  UserGetApi:
+  UserLoginApi:
     Type: AWS::ApiGateway::Method
     DependsOn:
-      - UserGetLambda
+      - UserLoginLambda
     Properties:
       HttpMethod: GET
       AuthorizationType: NONE
@@ -20,23 +20,23 @@ Resources:
         Type: "AWS_PROXY"
         Uri: !Sub
           - "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${lambdaArn}/invocations"
-          - lambdaArn: !GetAtt "UserGetLambda.Arn"
+          - lambdaArn: !GetAtt "UserLoginLambda.Arn"
       RestApiId: !Ref RestApi
       ResourceId: !Ref ResourceId
-  UserGetLambda:
+  UserLoginLambda:
     Type: AWS::Lambda::Function
     DependsOn:
-      - UserGetIamRole
+      - UserLoginIamRole
     Properties:
       Code: ./code
-      Description: Function to Get User
-      FunctionName: UserGet
+      Description: Function to Login User
+      FunctionName: UserLogin
       Handler: index.handler
       MemorySize: 128
-      Role: !GetAtt "UserGetIamRole.Arn"
-      Runtime: nodejs8.10
+      Role: !GetAtt "UserLoginIamRole.Arn"
+      Runtime: nodejs12.x
       Timeout: 60
-  UserGetIamRole:
+  UserLoginIamRole:
     Type: "AWS::IAM::Role"
     Properties:
       AssumeRolePolicyDocument:
@@ -64,10 +64,10 @@ Resources:
                   - "ec2:DeleteNetworkInterface"
                 Effect: "Allow"
                 Resource: '*'
-          PolicyName: "UserGetIamRole"
-  UserGetApiGatewayInvoke:
+          PolicyName: "UserLoginIamRole"
+  UserLoginApiGatewayInvoke:
     Type: "AWS::Lambda::Permission"
     Properties:
       Action: "lambda:InvokeFunction"
-      FunctionName: !GetAtt "UserGetLambda.Arn"
+      FunctionName: !GetAtt "UserLoginLambda.Arn"
       Principal: "apigateway.amazonaws.com"

@@ -4,7 +4,8 @@
   "description": "",
   "private": true,
   "scripts": {
-    "i:vue": "npm install -g @vue/cli"
+    "i:vue": "npm install -g @vue/cli",
+    "rm:windows": "Remove-Item -Path \".\\*.msi\""
   },
   "author": "natdog37",
   "license": "ISC"

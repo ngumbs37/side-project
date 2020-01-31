@@ -2,9 +2,12 @@
   "editor.tabSize": 2,
   "files.trimTrailingWhitespace": true,
   "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
   "files.exclude": {
     "**/.git": true,
     "**/.aws-sam": true,
     "**/node_modules": true
-  }
+  },
+  "javascript.format.semicolons": "remove",
+  "javascript.format.insertSpaceAfterKeywordsInControlFlowStatements": false,
 }

@@ -1,10 +1,10 @@
 {
-  "name": "get",
+  "name": "login",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "sam build -t ../user-get.yml",
+    "build": "sam build -t ../user-login.yml",
     "invoke": "sam local invoke --event ../test-event.json",
     "test:unit": "mocha ../unit.spec.js",
     "test:integration": "mocha ../integration.spec.js"

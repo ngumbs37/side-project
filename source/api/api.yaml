@@ -44,22 +44,22 @@ Resources:
       Parameters:
         RestApi: !Ref RestApi
         ResourceId: !Ref UserResource
-  UserGetTemplate:
+  UserLoginTemplate:
     Type: AWS::CloudFormation::Stack
     DependsOn:
       - UserResource
     Properties:
-      TemplateURL: !Sub 'https://s3.amazonaws.com/${S3CodeBucket}/user-get.yaml'
+      TemplateURL: !Sub 'https://s3.amazonaws.com/${S3CodeBucket}/user-login.yaml'
       TimeoutInMinutes: 20
       Parameters:
         RestApi: !Ref RestApi
         ResourceId: !Ref UserResource
-  UserCreateTemplate:
+  UserRegisterTemplate:
     Type: AWS::CloudFormation::Stack
     DependsOn:
       - UserResource
     Properties:
-      TemplateURL: !Sub 'https://s3.amazonaws.com/${S3CodeBucket}/user-create.yaml'
+      TemplateURL: !Sub 'https://s3.amazonaws.com/${S3CodeBucket}/user-register.yaml'
       TimeoutInMinutes: 20
       Parameters:
         RestApi: !Ref RestApi

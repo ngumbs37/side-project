@@ -30,12 +30,12 @@ Resources:
     Properties:
       Code: ./code # location of the code to be executed
       Description: Function to Get User
-      FunctionName: UserGet # custom name of the function
+      FunctionName: ExampleLambda # custom name of the function
       Handler: index.handler # entry point for the code filename.exported function
       MemorySize: 128 # memory allocated to the lambda in megabytes MB, current limit is 3008MB
       Role: !GetAtt "UserGetIamRole.Arn" # gets the unique address of the role across all of AWS
-      Runtime: nodejs8.10 # environment runtime https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html
-      Timeout: 60 # hard limit of how long the lambda should run
+      Runtime: nodejs12.x # environment runtime https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html
+      Timeout: 60 # hard limit of how long the lambda should run in seconds before killing the process, current limit is 900 (15min)
   UserGetIamRole: # name that can be references within a template
     Type: "AWS::IAM::Role" # declares new IAM role, used for granting permissions for AWS services https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-iam-role.html
     Properties:
@@ -49,7 +49,7 @@ Resources:
               Service: # which service will consume this role
                 - "lambda.amazonaws.com"
       Policies: # list of PolicyDocument https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-iam-policy.html
-        - PolicyDocument: # required value - user manages policy that gets attached to a IAM group, IAM role, or IAM, user
+        - PolicyDocument: # required value - user manages policy that gets attached to a IAM group, IAM role, or IAM user
             Version: "2012-10-17"
             Statement:
               - Action:

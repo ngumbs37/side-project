@@ -1,5 +1,5 @@
 exports.handler = async function(event, context) {
-  console.log('Got an event for User Get', event);
+  console.log('Got an event for User Get', event)
   var res = {
     "headers": {
       "statusCode": 204,
@@ -7,6 +7,6 @@ exports.handler = async function(event, context) {
       "Content-Type": "*/*"
     },
     "body": "Faisal just got a user"
-  };
-  return res;
+  }
+  return res
 }
