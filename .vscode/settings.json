@@ -10,4 +10,8 @@
   },
   "javascript.format.semicolons": "remove",
   "javascript.format.insertSpaceAfterKeywordsInControlFlowStatements": false,
+  "prettier.singleQuote": true,
+  "prettier.jsxSingleQuote": true,
+  "prettier.vueIndentScriptAndStyle": false,
+  "javascript.preferences.quoteStyle": "single",
 }
