@@ -7,11 +7,7 @@ const put = (table, item) => {
     const params = {
       TableName: table,
       Item: item,
-      ExpressionAttributeNames: {
-        '#id': item.id
-      },
-      ConditionExpression: 'attribute_not_exists(#id)',
-      ReturnValues: 'NONE',
+      ConditionExpression: 'attribute_not_exists(id)',
     }
     return dynamodb.put(params).promise()
 }

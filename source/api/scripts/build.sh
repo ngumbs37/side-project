@@ -1,4 +1,4 @@
-for i in $(find ./src -not -path '*/.aws-sam/*' -not -path '*/node_modules/*' -name '*.yml'); do
+for i in $(find ./src -not -path '*/.aws-sam/*' -not -path '*/node_modules/*' -name '*.ymll'); do
     filename=$(basename $i)
     directory=$(dirname $i)
     yml_to_yaml=${filename/yml/yaml}
