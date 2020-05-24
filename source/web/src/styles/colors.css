@@ -1,0 +1,50 @@
+:root {
+  /* Main Colors */
+  --main-bg-color-purple: #8747a6;
+  --main-bg-color-pink: #ff6f75;
+  --transclucent-white: #ffffff66;
+  --transclucent-white-light: #ffffff36;
+  --transclucent-white-darker: #ffffff96;
+  /* Card Details */
+  --purple-text: #7600a7;
+  --vocal-blue: #00a4fc;
+  --dance-orange: #ff7f01;
+  --act-magenta: #dd007f;
+  /* Character Colors */
+  --lala-chara-color: #fffb7e99;
+  --momo-chara-color: #e060a099;
+  --nana-chara-color: #ffc98999;
+  --haruna-chara-color: #b473d799;
+  --yui-chara-color: #8cbebe99;
+  --yami-chara-color: #8c8c8299;
+  --mea-chara-color: #ffa0a099;
+  --mikan-chara-color: #5b97c799;
+  --other-chara-color: #78f06499;
+}
+
+body {
+  background-attachment: fixed;
+  background-image: linear-gradient( to right, var(--main-bg-color-purple), var(--main-bg-color-pink));
+}
+
+.purple-text {
+  color: var(--purple-text);
+}
+.vocal-blue {
+  color: var(--vocal-blue);
+}
+.dance-orange {
+  color: var(--dance-orange);
+}
+.act-magenta {
+  color: var(--act-magenta);
+}
+.shaded {
+  background-color: var(--transclucent-white);
+}
+.shaded-dark {
+  background-color: var(--transclucent-white-darker);
+}
+.shaded-light {
+  background-color: var(--transclucent-white-light);
+}

@@ -1,0 +1,32 @@
+{
+  "name": "serverless-pattern",
+  "version": "1.0.0",
+  "description": "test for api gw",
+  "main": "index.js",
+  "scripts": {
+    "build": "source .env-dev && sh scripts/build.sh",
+    "build:test": "source .env-test && sh scripts/build.sh",
+    "build:windows:test": ".\\scripts\\build-test.cmd && npm run test:upload",
+    "test:upload": "aws s3 cp templates s3://BUCKET_NAME --recursive",
+    "deploy": "source .env-dev && sh scripts/deploy.sh",
+    "deploy:test": "source .env-test && sh scripts/deploy.sh",
+    "deploy:windows:test": ".\\scripts\\deploy-test.cmd",
+    "test:unit": "mocha ./**/unit.spec.js",
+    "test:integration": "mocha ./**/integration.spec.js"
+  },
+  "devDependencies": {
+    "aws-sdk": "^2.578.0",
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "chai-http": "^4.3.0",
+    "faker": "^4.1.0",
+    "json-schema-faker": "^0.5.0-rc23",
+    "mocha": "^6.2.2",
+    "module-alias": "^2.2.2",
+    "rewiremock": "^3.13.9"
+  },
+  "_moduleAliases": {
+    "@test": "./test",
+    "@stubs": "./test/stubs"
+  }
+}

@@ -1,0 +1,10 @@
+- make and log event utility
+- create tables
+- create login
+- set up vue cli
+- create hello world example router with templates
+- create json schema for user object
+- create json schema for card objects
+- create json schema for card inventory
+- create json schema for item objects
+- create json schema for item inventory

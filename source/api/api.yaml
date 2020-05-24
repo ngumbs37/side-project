@@ -1,0 +1,110 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Our app API
+Parameters:
+  DeploymentStage:
+    Description: The stage of this deployment
+    Type: String
+    Default: development
+  Name:
+    Description: Name of the RestAPI
+    Type: String
+    Default: test-api
+  S3CodeBucket:
+    Description: S3CodeBucket of the deployment
+    Type: String
+  Stage:
+    Description: Level of deployment
+    Type: String
+Resources:
+  RestApi:
+    Type: AWS::ApiGateway::RestApi
+    Properties:
+      Description:
+        Ref: Name
+      FailOnWarnings: true
+      Name:
+        Ref: Name
+  UserResource:
+    Type: AWS::ApiGateway::Resource
+    DependsOn:
+      - RestApi
+    Properties:
+      RestApiId: !Ref RestApi
+      ParentId: !GetAtt
+        - RestApi
+        - RootResourceId
+      PathPart: user
+  UserPostTemplate:
+    Type: AWS::CloudFormation::Stack
+    DependsOn:
+      - UserResource
+    Properties:
+      TemplateURL: !Sub 'https://s3.amazonaws.com/${S3CodeBucket}/user-post.yaml'
+      TimeoutInMinutes: 20
+      Parameters:
+        RestApi: !Ref RestApi
+        ResourceId: !Ref UserResource
+  UserLoginTemplate:
+    Type: AWS::CloudFormation::Stack
+    DependsOn:
+      - UserResource
+    Properties:
+      TemplateURL: !Sub 'https://s3.amazonaws.com/${S3CodeBucket}/user-login.yaml'
+      TimeoutInMinutes: 20
+      Parameters:
+        RestApi: !Ref RestApi
+        ResourceId: !Ref UserResource
+  UserRegisterTemplate:
+    Type: AWS::CloudFormation::Stack
+    DependsOn:
+      - UserResource
+    Properties:
+      TemplateURL: !Sub 'https://s3.amazonaws.com/${S3CodeBucket}/user-register.yaml'
+      TimeoutInMinutes: 20
+      Parameters:
+        RestApi: !Ref RestApi
+        ResourceId: !Ref UserResource
+        Stage: !Ref Stage
+  UserTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: "id"
+          AttributeType: "S"
+        - AttributeName: "money"
+          AttributeType: "N"
+      KeySchema:
+        - AttributeName: "id"
+          KeyType: "HASH"
+        # - AttributeName: "next_run_date"
+        #   KeyType: "RANGE"
+      GlobalSecondaryIndexes:
+        - IndexName: "SearchByMoneyAmount"
+          KeySchema:
+            - AttributeName: "money"
+              KeyType: "HASH"
+          Projection:
+            ProjectionType: "KEYS_ONLY"
+        # - IndexName: "SearchByLoanNumber"
+        #   KeySchema:
+        #     - AttributeName: "loan_number"
+        #       KeyType: "HASH"
+        #   Projection:
+        #     ProjectionType: "KEYS_ONLY"
+      BillingMode: PAY_PER_REQUEST
+      TableName: !Sub "${Stage}-UserTable"
+Outputs:
+  ServerlessDNS:
+    Value:
+      Fn::Join:
+      - "."
+      - - Ref: RestApi
+        - execute-api
+        - Ref: AWS::Region
+        - amazonaws.com
+    Description: Serverless DNS
+  RestApi:
+    Value: !Ref RestApi
+    Export:
+      Name: RestApi
+    Description: RestAPI to use

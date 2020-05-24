@@ -1,0 +1,73 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Our app API
+Parameters:
+  RestApi:
+    Description: Name of the RestAPI
+    Type: String
+  ResourceId:
+    Description: ID of the Resource
+    Type: String
+Resources:
+  UserLoginApi:
+    Type: AWS::ApiGateway::Method
+    DependsOn:
+      - UserLoginLambda
+    Properties:
+      HttpMethod: GET
+      AuthorizationType: NONE
+      Integration:
+        IntegrationHttpMethod: "POST"
+        Type: "AWS_PROXY"
+        Uri: !Sub
+          - "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${lambdaArn}/invocations"
+          - lambdaArn: !GetAtt "UserLoginLambda.Arn"
+      RestApiId: !Ref RestApi
+      ResourceId: !Ref ResourceId
+  UserLoginLambda:
+    Type: AWS::Lambda::Function
+    DependsOn:
+      - UserLoginIamRole
+    Properties:
+      Code: ./code
+      Description: Function to Login User
+      FunctionName: UserLogin
+      Handler: index.handler
+      MemorySize: 128
+      Role: !GetAtt "UserLoginIamRole.Arn"
+      Runtime: nodejs12.x
+      Timeout: 60
+  UserLoginIamRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Action:
+              - "sts:AssumeRole"
+            Effect: "Allow"
+            Principal:
+              Service:
+                - "lambda.amazonaws.com"
+      Policies:
+        - PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Action:
+                  - "logs:CreateLogGroup"
+                  - "logs:CreateLogStream"
+                  - "logs:PutLogEvents"
+                Effect: "Allow"
+                Resource: '*'
+              - Action:
+                  - "ec2:CreateNetworkInterface"
+                  - "ec2:DescribeNetworkInterfaces"
+                  - "ec2:DeleteNetworkInterface"
+                Effect: "Allow"
+                Resource: '*'
+          PolicyName: "UserLoginIamRole"
+  UserLoginApiGatewayInvoke:
+    Type: "AWS::Lambda::Permission"
+    Properties:
+      Action: "lambda:InvokeFunction"
+      FunctionName: !GetAtt "UserLoginLambda.Arn"
+      Principal: "apigateway.amazonaws.com"

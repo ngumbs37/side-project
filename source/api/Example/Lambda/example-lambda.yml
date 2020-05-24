@@ -1,0 +1,75 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Our app API
+Parameters: # parameter(s) required for this template and could be passed via CLI or another template
+  RestApi:
+    Description: Name of the RestAPI
+    Type: String
+  ResourceId:
+    Description: ID of the Resource
+    Type: String
+Resources:
+  UserGetApi: # name that can be references within a template
+    Type: AWS::ApiGateway::Method # declares a method on a resource of apigateway https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-apigateway-method.html
+    DependsOn:
+    - UserGetLambda # name of function to use when this api endpoint + http method is called
+    Properties:
+      HttpMethod: GET # required value - Type of Http method, available options are DELETE, GET, OPTIONS, PATCH, POST, PUT
+      AuthorizationType: NONE
+      Integration: # when apigateway recieves an event the info isn't modified and passed straight to the lambda specified in the lambdaArn using AWS_PROXY
+        IntegrationHttpMethod: "POST"
+        Type: "AWS_PROXY"
+        Uri: !Sub
+          - "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${lambdaArn}/invocations"
+          - lambdaArn: !GetAtt "UserGetLambda.Arn" # !GetAtt "<ResourceName>.Arn" gets the unique address of the lambda function across all of AWS https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html
+      RestApiId: !Ref RestApi # required value - references a property's value defined in the template (in this case, from Parameters that is passed in the parent .yaml file)
+      ResourceId: !Ref ResourceId # required value - references a property's value defined in the template (in this case, from Parameters that is passed in the parent .yaml file)
+  UserGetLambda: # name that can be references within a template
+    Type: AWS::Lambda::Function # declares a new lambda https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-lambda-function.html
+    DependsOn:
+    - UserGetIamRole
+    Properties:
+      Code: ./code # location of the code to be executed
+      Description: Function to Get User
+      FunctionName: ExampleLambda # custom name of the function
+      Handler: index.handler # entry point for the code filename.exported function
+      MemorySize: 128 # memory allocated to the lambda in megabytes MB, current limit is 3008MB
+      Role: !GetAtt "UserGetIamRole.Arn" # gets the unique address of the role across all of AWS
+      Runtime: nodejs12.x # environment runtime https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html
+      Timeout: 60 # hard limit of how long the lambda should run in seconds before killing the process, current limit is 900 (15min)
+  UserGetIamRole: # name that can be references within a template
+    Type: "AWS::IAM::Role" # declares new IAM role, used for granting permissions for AWS services https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-iam-role.html
+    Properties:
+      AssumeRolePolicyDocument: # required value -
+        Version: "2012-10-17"
+        Statement:
+          - Action:
+              - "sts:AssumeRole"
+            Effect: "Allow"
+            Principal:
+              Service: # which service will consume this role
+                - "lambda.amazonaws.com"
+      Policies: # list of PolicyDocument https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-iam-policy.html
+        - PolicyDocument: # required value - user manages policy that gets attached to a IAM group, IAM role, or IAM user
+            Version: "2012-10-17"
+            Statement:
+              - Action:
+                  - "logs:CreateLogGroup"
+                  - "logs:CreateLogStream"
+                  - "logs:PutLogEvents"
+                Effect: "Allow"
+                Resource: '*' # speficies which resource this has access to. for logs '*' gives it access to all permissions in the actions above
+                # usually what you want to do is provide the resource ARN to limit access as much as possible
+              - Action:
+                  - "ec2:CreateNetworkInterface"
+                  - "ec2:DescribeNetworkInterfaces"
+                  - "ec2:DeleteNetworkInterface"
+                Effect: "Allow"
+                Resource: '*' # speficies which resource this has access to.
+          PolicyName: "UserGetIamRole" # required value - custom name that identifies this policy
+  UserGetApiGatewayInvoke:
+    Type: "AWS::Lambda::Permission" # declares permission to use a lambda function https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-lambda-permission.html
+    Properties:
+      Action: "lambda:InvokeFunction" # required value - what kind action can this service take on the lambda function
+      FunctionName: !GetAtt "UserGetLambda.Arn" # required value - specifies which lambda it can use. FunctionName, Function ARN, or Partial ARN are valid values.
+      # Function ARN is used in this case using !GetAtt "<ResourceName>.Arn" to get the unique address of the lambda function
+      Principal: "apigateway.amazonaws.com" # required value - the service that uses the lambda

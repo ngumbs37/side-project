@@ -1,0 +1,19 @@
+{
+  "name": "user-register",
+  "version": "1.0.0",
+  "description": "User registration endpoint",
+  "main": "index.js",
+  "scripts": {
+    "build": "sam build -t ../user-register.yml",
+    "invoke": "sam local invoke --event test-event.json",
+    "test:unit": "mocha ../unit.spec.js",
+    "test:integration": "mocha ../integration.spec.js"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "3.0.6",
+    "faker": "4.1.0",
+    "jsonwebtoken": "^8.5.1",
+    "uuid": "^3.3.3"
+  }
+}
